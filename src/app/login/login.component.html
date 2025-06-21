@@ -1,0 +1,75 @@
+<mat-card class="login-card" >
+  <h2 class="login-title">User Login</h2>
+
+  <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+    
+    <!-- Email Field -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        type="email"
+        name="email"
+        [(ngModel)]="email"
+        required
+        email
+        #emailRef="ngModel"
+      />
+      <mat-error *ngIf="emailRef.errors?.['required']">
+        Email is required
+      </mat-error>
+      <mat-error *ngIf="emailRef.errors?.['email']">
+        Please enter a valid email address
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Password Field -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        required
+        minlength="6"
+        pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{6,}"
+        #passwordRef="ngModel"
+      />
+      <mat-error *ngIf="passwordRef.errors?.['required']">
+        Password is required
+      </mat-error>
+      <mat-error *ngIf="passwordRef.errors?.['minlength']">
+        Password must be at least 6 characters long
+      </mat-error>
+      <mat-error *ngIf="passwordRef.errors?.['pattern']">
+        Password must include uppercase, lowercase, and number
+      </mat-error>
+    </mat-form-field>
+    <br>
+
+    <!-- Submit Button -->
+    <div class="button-wrapper">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!loginForm.form.valid"
+      >
+        Login
+      </button>
+    </div>
+
+  </form>
+
+
+    <!-- Register Link -->
+    <p class="register-link">
+        Don't have an account?
+    <a (click)="onRegister()">
+        Register New User
+    </a>
+</p>
+
+
+</mat-card>
