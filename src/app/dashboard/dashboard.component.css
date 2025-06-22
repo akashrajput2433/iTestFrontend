@@ -1,0 +1,110 @@
+/* Layout containers */
+.dashboard-container {
+  height: 100vh;
+}
+
+/* Sidebar styles */
+.sidenav {
+  width: 200px;
+  padding-top: 20px;
+  background-color: #ede7f6; /* light purple background */
+}
+
+.logo {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #673ab7; /* deep purple */
+}
+
+/* Top toolbar */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+/* Main content */
+.main-content {
+  padding: 24px;
+}
+
+/* Section titles */
+.section-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #673ab7;
+  border-bottom: 2px solid #673ab7;
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+/* Upcoming quiz styling */
+.upcoming-quiz-wrapper {
+  margin-top: 16px;
+  margin-bottom: 32px;
+}
+
+.upcoming-quiz-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.quiz-label {
+  padding: 12px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+}
+
+.quiz-label:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+mat-card-content p {
+  font-size: 14px;
+  margin: 0;
+  color: #555;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Quiz History Table */
+.quiz-history {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th.mat-header-cell {
+  background-color: #673ab7;
+  color: white;
+  font-weight: 600;
+}
+
+td.mat-cell, th.mat-header-cell {
+  padding: 12px;
+  text-align: left;
+}
+
+tr.mat-row:hover {
+  background-color: #f3e5f5;
+}

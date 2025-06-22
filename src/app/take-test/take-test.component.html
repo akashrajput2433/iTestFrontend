@@ -1,0 +1,33 @@
+<div class="test-container">
+  <h2 class="quiz-title">{{ quizTitle }}</h2>
+
+  <form *ngIf="questions.length && !showResult" (ngSubmit)="submitQuiz()">
+    <div *ngFor="let question of questions; let i = index" class="question-card">
+      <mat-card class="mat-elevation-z3">
+        <mat-card-title>Q{{ i + 1 }}: {{ question.questionText }}</mat-card-title>
+        <mat-card-content>
+          <mat-radio-group [(ngModel)]="userAnswers[i]" name="question{{ i }}">
+            <mat-radio-button *ngFor="let option of question.options" [value]="option">
+              {{ option }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="submit-button">
+      <button mat-raised-button color="primary" type="submit">Submit Test</button>
+    </div>
+  </form>
+
+  <div *ngIf="showResult" class="result-card">
+    <mat-card class="mat-elevation-z3">
+      <mat-card-title>Quiz Result</mat-card-title>
+      <mat-card-content>
+        <p><strong>Total Questions:</strong> {{ questions.length }}</p>
+        <p><strong>Correct Answers:</strong> {{ score }}</p>
+        <p><strong>Percentage:</strong> {{ (score / questions.length) * 100 | number:'1.0-2' }}%</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

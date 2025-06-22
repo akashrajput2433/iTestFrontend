@@ -1,0 +1,75 @@
+<mat-sidenav-container class="dashboard-container">
+  <!-- Sidebar -->
+  <mat-sidenav mode="side" opened class="sidenav">
+    <div class="logo">ITest</div>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/dashboard">Dashboard</a>
+      <a mat-list-item routerLink="/quiz">Quiz</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Main Content Area -->
+  <mat-sidenav-content>
+    <!-- Top Toolbar -->
+    <mat-toolbar color="primary" class="toolbar">
+      <span class="toolbar-spacer"></span>
+      <button mat-button [matMenuTriggerFor]="profileMenu">
+        <mat-icon>account_circle</mat-icon> Profile
+      </button>
+      <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item routerLink="/profile/edit">
+          <mat-icon>edit</mat-icon> Edit Profile
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon> Logout
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+
+    <div class="main-content">
+      <!-- Upcoming Quizzes -->
+      <h2 class="section-title">Upcoming Quizzes</h2>
+      <div class="upcoming-quiz-wrapper">
+        <div class="upcoming-quiz-container">
+          <mat-card class="quiz-label" *ngFor="let quiz of upcomingQuizzes">
+            <mat-card-title>{{ quiz.name }}</mat-card-title>
+            <mat-card-content>
+              <p><strong>Due Date:</strong> {{ quiz.dueDate | date: 'longDate' }}</p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-raised-button color="primary" (click)="confirmAndNavigate(quiz.id)">
+                Take Test
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+
+      <!-- Quiz History -->
+      <h3 class="section-title">Quiz History</h3>
+      <div class="quiz-history">
+        <table mat-table [dataSource]="quizHistory" class="mat-elevation-z2 history-table">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Quiz Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="marks">
+            <th mat-header-cell *matHeaderCellDef> Marks </th>
+            <td mat-cell *matCellDef="let element"> {{element.marks}} / {{element.total}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="percentage">
+            <th mat-header-cell *matHeaderCellDef> Percentage </th>
+            <td mat-cell *matCellDef="let element">
+              {{ (element.marks / element.total * 100) | number:'1.0-0' }}%
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="['name', 'marks', 'percentage']"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['name', 'marks', 'percentage'];"></tr>
+        </table>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

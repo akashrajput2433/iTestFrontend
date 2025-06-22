@@ -1,8 +1,7 @@
-<mat-card class="login-card" >
+<mat-card class="login-card">
   <h2 class="login-title">User Login</h2>
 
   <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
-    
     <!-- Email Field -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Email</mat-label>
@@ -46,7 +45,17 @@
         Password must include uppercase, lowercase, and number
       </mat-error>
     </mat-form-field>
-    <br>
+
+    <br />
+
+    <!-- CAPTCHA -->
+    <div style="margin: 20px 0;">
+      <re-captcha
+        siteKey="6LeMhWgrAAAAAMdR0uujSayHkNRCkKSno-wo5kkK"
+        (resolved)="onCaptchaResolved($event)">
+      </re-captcha>
+      <mat-error *ngIf="captchaError">Please verify that you are not a robot.</mat-error>
+    </div>
 
     <!-- Submit Button -->
     <div class="button-wrapper">
@@ -54,22 +63,16 @@
         mat-raised-button
         color="primary"
         type="submit"
-        [disabled]="!loginForm.form.valid"
+        [disabled]="!loginForm.form.valid || !captchaToken"
       >
         Login
       </button>
     </div>
-
   </form>
 
-
-    <!-- Register Link -->
-    <p class="register-link">
-        Don't have an account?
-    <a (click)="onRegister()">
-        Register New User
-    </a>
-</p>
-
-
+  <!-- Register Link -->
+  <p class="register-link">
+    Don't have an account?
+    <a (click)="onRegister()">Register New User</a>
+  </p>
 </mat-card>
