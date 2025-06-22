@@ -26,6 +26,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { TakeTestComponent } from './take-test/take-test.component';
 
 
+import { RegisterComponent } from './register/register.component';
 
 
 
@@ -36,7 +37,8 @@ import { TakeTestComponent } from './take-test/take-test.component';
     DashboardComponent,
     QuizComponent,
     ProfileEditComponent,
-    TakeTestComponent
+    TakeTestComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
