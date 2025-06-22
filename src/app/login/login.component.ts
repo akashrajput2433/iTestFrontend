@@ -35,6 +35,9 @@ export class LoginComponent {
       console.log('Email:', this.email);
       console.log('Password:', this.password);
       console.log('CAPTCHA Token:', this.captchaToken);
+
+      localStorage.setItem('authToken', 'logged-in');
+      this.router.navigate(['/dashboard']);
       
       // TODO: Add your real authentication logic here
       // Optionally send captchaToken to the backend for verification

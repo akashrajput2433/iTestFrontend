@@ -1,33 +1,47 @@
-<div class="test-container">
-  <h2 class="quiz-title">{{ quizTitle }}</h2>
+<mat-sidenav-container class="test-layout">
+  <!-- Sidebar -->
+  <mat-sidenav mode="side" opened class="sidenav">
+    <mat-toolbar color="primary">ITest</mat-toolbar>
+  </mat-sidenav>
 
-  <form *ngIf="questions.length && !showResult" (ngSubmit)="submitQuiz()">
-    <div *ngFor="let question of questions; let i = index" class="question-card">
-      <mat-card class="mat-elevation-z3">
-        <mat-card-title>Q{{ i + 1 }}: {{ question.questionText }}</mat-card-title>
-        <mat-card-content>
-          <mat-radio-group [(ngModel)]="userAnswers[i]" name="question{{ i }}">
-            <mat-radio-button *ngFor="let option of question.options" [value]="option">
-              {{ option }}
-            </mat-radio-button>
-          </mat-radio-group>
-        </mat-card-content>
-      </mat-card>
+  <!-- Main content -->
+  <mat-sidenav-content>
+    <!-- Fixed Top Navbar -->
+    <mat-toolbar color="primary" class="topbar">
+    </mat-toolbar>
+
+    <!-- Main Scrollable Content -->
+    <div class="content-wrapper">
+      <div class="test-container" *ngIf="questions.length">
+        <mat-card class="quiz-header">
+          <h2>{{ quizTitle }}</h2>
+          <p>Answer the following questions:</p>
+        </mat-card>
+
+        <form (ngSubmit)="submitQuiz()">
+          <div *ngFor="let question of questions; let i = index">
+            <mat-card class="question-card">
+              <h3>Q{{ i + 1 }}: {{ question.questionText }}</h3>
+              <mat-radio-group
+                [name]="'question_' + question.id"
+                (change)="selectAnswer(question.id, $event.value)"
+              >
+                <mat-radio-button
+                  *ngFor="let option of question.options"
+                  [value]="option"
+                  class="option-button"
+                >
+                  {{ option }}
+                </mat-radio-button>
+              </mat-radio-group>
+            </mat-card>
+          </div>
+
+          <div class="submit-button">
+            <button mat-raised-button color="primary" type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
     </div>
-
-    <div class="submit-button">
-      <button mat-raised-button color="primary" type="submit">Submit Test</button>
-    </div>
-  </form>
-
-  <div *ngIf="showResult" class="result-card">
-    <mat-card class="mat-elevation-z3">
-      <mat-card-title>Quiz Result</mat-card-title>
-      <mat-card-content>
-        <p><strong>Total Questions:</strong> {{ questions.length }}</p>
-        <p><strong>Correct Answers:</strong> {{ score }}</p>
-        <p><strong>Percentage:</strong> {{ (score / questions.length) * 100 | number:'1.0-2' }}%</p>
-      </mat-card-content>
-    </mat-card>
-  </div>
-</div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

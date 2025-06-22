@@ -1,16 +1,16 @@
 <mat-sidenav-container class="dashboard-container">
   <!-- Sidebar -->
   <mat-sidenav mode="side" opened class="sidenav">
-    <div class="logo">ITest</div>
+    <mat-toolbar color="primary">ITest</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="/dashboard">Dashboard</a>
       <a mat-list-item routerLink="/quiz">Quiz</a>
     </mat-nav-list>
   </mat-sidenav>
 
-  <!-- Main Content Area -->
+  <!-- Main Content -->
   <mat-sidenav-content>
-    <!-- Top Toolbar -->
+    <!-- Top Navbar -->
     <mat-toolbar color="primary" class="toolbar">
       <span class="toolbar-spacer"></span>
       <button mat-button [matMenuTriggerFor]="profileMenu">
@@ -29,25 +29,28 @@
     <div class="main-content">
       <!-- Upcoming Quizzes -->
       <h2 class="section-title">Upcoming Quizzes</h2>
-      <div class="upcoming-quiz-wrapper">
-        <div class="upcoming-quiz-container">
-          <mat-card class="quiz-label" *ngFor="let quiz of upcomingQuizzes">
-            <mat-card-title>{{ quiz.name }}</mat-card-title>
-            <mat-card-content>
-              <p><strong>Due Date:</strong> {{ quiz.dueDate | date: 'longDate' }}</p>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-raised-button color="primary" (click)="confirmAndNavigate(quiz.id)">
-                Take Test
-              </button>
-            </mat-card-actions>
-          </mat-card>
-        </div>
+      <div class="upcoming-quiz-container">
+        <mat-card *ngFor="let quiz of upcomingQuizzes">
+          <mat-card-title>{{ quiz.name }}</mat-card-title>
+          <mat-card-content>
+            <p><strong>Due Date:</strong> {{ quiz.dueDate | date: 'longDate' }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="confirmAndNavigate(quiz.id)">
+              Take Test
+            </button>
+          </mat-card-actions>
+        </mat-card>
       </div>
 
       <!-- Quiz History -->
       <h3 class="section-title">Quiz History</h3>
-      <div class="quiz-history">
+
+      <div style="text-align: right; margin-bottom: 10px;">
+        <button mat-stroked-button color="warn" (click)="clearHistory()">Clear History</button>
+      </div>
+
+      <div class="quiz-history" *ngIf="quizHistory.length > 0; else noHistory">
         <table mat-table [dataSource]="quizHistory" class="mat-elevation-z2 history-table">
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Quiz Name </th>
@@ -70,6 +73,10 @@
           <tr mat-row *matRowDef="let row; columns: ['name', 'marks', 'percentage'];"></tr>
         </table>
       </div>
+
+      <ng-template #noHistory>
+        <p style="text-align:center; color: gray; font-style: italic;">No quiz history available.</p>
+      </ng-template>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -22,11 +22,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
-import { MatRadioModule } from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio'
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TakeTestComponent } from './take-test/take-test.component';
 
 
 import { RegisterComponent } from './register/register.component';
+import { ResultComponent } from './result/result.component';
 
 
 
@@ -38,7 +40,8 @@ import { RegisterComponent } from './register/register.component';
     QuizComponent,
     ProfileEditComponent,
     TakeTestComponent,
-    RegisterComponent
+    RegisterComponent,
+    ResultComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +53,7 @@ import { RegisterComponent } from './register/register.component';
     MatMenuModule,
     MatIconModule,
     MatToolbarModule,
+    MatProgressBarModule,
     ReactiveFormsModule,
     BrowserAnimationsModule, 
     MatSidenavModule,

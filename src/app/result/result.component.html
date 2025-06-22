@@ -1,0 +1,35 @@
+<mat-card class="result-card">
+  <mat-card-header>
+    <mat-card-title>
+      <h2 class="quiz-name">{{ result.quizName }} - Result</h2>
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="score-section">
+      <mat-icon class="score-icon" color="primary">emoji_events</mat-icon>
+      <div class="score-info">
+        <h3>{{ result.percentage }}%</h3>
+        <p class="score-label">Overall Score</p>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="result-details">
+      <p><strong>Attempted:</strong> {{ result.attempted }}</p>
+      <p><strong>Correct Answers:</strong> {{ result.correctAnswers }}</p>
+      <p><strong>Wrong Answers:</strong> {{ result.wrongAnswers }}</p>
+    </div>
+
+    <mat-progress-bar
+      color="primary"
+      mode="determinate"
+      [value]="result.percentage"
+    ></mat-progress-bar>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-raised-button color="primary" (click)="goBack()">Back to Dashboard</button>
+  </mat-card-actions>
+</mat-card>
