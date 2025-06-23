@@ -6,10 +6,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 
+// components
 import { LoginComponent } from './login/login.component';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { QuizComponent } from './quiz/quiz.component';
+import { TakeTestComponent } from './take-test/take-test.component';
+import { ResultComponent } from './result/result.component';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 
 // ✅ Angular Material Modules
 import { MatSelectModule } from '@angular/material/select';
@@ -23,12 +28,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
-import { MatRadioModule } from '@angular/material/radio';
-import { TakeTestComponent } from './take-test/take-test.component';
-
-
-import { RegisterComponent } from './register/register.component';
-
+import { MatRadioModule } from '@angular/material/radio'
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 @NgModule({
@@ -39,7 +42,11 @@ import { RegisterComponent } from './register/register.component';
     QuizComponent,
     ProfileEditComponent,
     TakeTestComponent,
-    RegisterComponent
+    RegisterComponent,
+    ResultComponent,
+    ForgetPasswordComponent,
+    ResetPasswordComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -51,6 +58,7 @@ import { RegisterComponent } from './register/register.component';
     MatMenuModule,
     MatIconModule,
     MatToolbarModule,
+    MatProgressBarModule,
     ReactiveFormsModule,
     BrowserAnimationsModule, 
     MatSidenavModule,

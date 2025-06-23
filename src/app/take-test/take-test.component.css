@@ -1,39 +1,68 @@
-.test-container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 24px;
+:host {
+  display: block;
+  height: 100vh;
 }
 
-.quiz-title {
+.test-layout {
+  height: 100vh;
+}
+
+.sidenav {
+  width: 200px;
+  background-color:white;
+
+}
+
+.logo {
   font-size: 24px;
-  font-weight: 600;
-  color: #3f51b5;
-  margin-bottom: 24px;
-  border-bottom: 2px solid #3f51b5;
-  padding-bottom: 4px;
+  font-weight: bold;
+  margin: 10px 0;
+  text-align: center;
+
+}
+
+/* Fixed Topbar */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 200px; 
+  right: 0;
+  height: 64px;
+  z-index: 1000;
+}
+
+/* Content wrapper adjusts for fixed topbar */
+.content-wrapper {
+  margin-top: 64px; 
+  padding: 20px;
+  overflow-y: auto;
+  height: calc(100vh - 64px);
+}
+
+/* Quiz Content */
+.test-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.quiz-header {
+  margin-bottom: 20px;
+  background-color: whitesmoke;
+  text-align: center;
 }
 
 .question-card {
-  margin-bottom: 20px;
+  margin: 20px 0;
+  padding: 20px;
+  background-color: white;
 }
 
-mat-card-title {
-  font-size: 18px;
-  font-weight: 500;
-  margin-bottom: 12px;
-}
-
-mat-radio-button {
+.option-button {
   display: block;
-  margin: 6px 0;
+  margin: 8px 0;
 }
 
 .submit-button {
-  text-align: right;
-  margin-top: 24px;
-}
-
-.result-card {
-  margin-top: 32px;
-  padding: 20px;
+  text-align: center;
+  margin-top: 30px;
 }

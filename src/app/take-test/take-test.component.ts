@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-take-test',
@@ -7,68 +7,69 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./take-test.component.css']
 })
 export class TakeTestComponent implements OnInit {
-  quizId: number | null = null;
-  quizTitle: string = '';
+  quizId!: number;
+  quizTitle = '';
   questions: any[] = [];
-  userAnswers: string[] = [];
-  score: number = 0;
-  showResult: boolean = false;
+  answers: { [key: number]: string } = {};
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.quizId = Number(this.route.snapshot.paramMap.get('id'));
     this.quizTitle = `Quiz #${this.quizId}`;
-    if (this.quizId === 201) {
-      this.questions = [ 
-        {
-        questionText: 'What is the capital of France?',
-        options: ['London', 'Berlin', 'Paris', 'Madrid'],
-        correctAnswer: 'Paris '
-        }
-        ];
-    }   
-    else if (this.quizId === 202) {
-      this.questions = [ /* Java Programming quiz questions */ ];
-    }   
-    else {
-      this.questions = []; // fallback
-    }
-
-
-    // this.questions = [
-    //   {
-        // questionText: 'What is the capital of France?',
-        // options: ['London', 'Berlin', 'Paris', 'Madrid'],
-        // correctAnswer: 'Paris'
-    //   },
-    //   {
-    //     questionText: 'Which language runs in a web browser?',
-    //     options: ['C++', 'Python', 'Java', 'JavaScript'],
-    //     correctAnswer: 'JavaScript'
-    //   },
-    //   {
-    //     questionText: 'What does CPU stand for?',
-    //     options: ['Central Process Unit', 'Computer Personal Unit', 'Central Performance Unit', 'Central Processing Unit'],
-    //     correctAnswer: 'Central Processing Unit'
-    //   },
-    //   {
-    //     questionText: 'What is the square root of 64?',
-    //     options: ['6', '7', '8', '9'],
-    //     correctAnswer: '8'
-    //   }
-    // ];
-
-    this.userAnswers = new Array(this.questions.length).fill('');
+    this.loadDummyQuestions();
   }
 
-  submitQuiz() {
-    this.score = 0;
-    this.questions.forEach((q, index) => {
-      if (this.userAnswers[index] === q.correctAnswer) {
-        this.score++;
+  loadDummyQuestions(): void {
+    this.questions = Array.from({ length: 10 }, (_, i) => ({
+      id: i + 1,
+      questionText: `Question ${i + 1} text?`,
+      options: ['Option A', 'Option B', 'Option C', 'Option D'],
+      correctAnswer: 'Option A'
+    }));
+  }
+
+  selectAnswer(questionId: number, answer: string): void {
+    this.answers[questionId] = answer;
+  }
+
+  submitQuiz(): void {
+    let correct = 0;
+    let attempted = 0;
+
+    this.questions.forEach(q => {
+      const answer = this.answers[q.id];
+      if (answer) {
+        attempted++;
+        if (answer === q.correctAnswer) correct++;
       }
     });
-    this.showResult = true;
+
+    const total = this.questions.length;
+    const percentage = Math.round((correct / total) * 100);
+
+    const resultData = {
+      quizName: this.quizTitle,
+      correctAnswers: correct,
+      wrongAnswers: total - correct,
+      attempted:attempted,
+      percentage: percentage
+    };
+
+    const existingHistory = JSON.parse(localStorage.getItem('quizHistory') || '[]') as {
+      name: string;
+      marks: number;
+      total: number;
+    }[];
+
+    existingHistory.push({
+      name: resultData.quizName,
+      marks: resultData.correctAnswers,
+      total: total
+    });
+
+    localStorage.setItem('quizHistory', JSON.stringify(existingHistory));
+
+    this.router.navigate(['/result'], { state: { result: resultData } });
   }
 }

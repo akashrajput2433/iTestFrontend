@@ -2,6 +2,7 @@
   <h2 class="login-title">User Login</h2>
 
   <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+
     <!-- Email Field -->
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Email</mat-label>
@@ -31,27 +32,31 @@
         name="password"
         [(ngModel)]="password"
         required
-        minlength="6"
-        pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{6,}"
+        minlength="8"
+        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
         #passwordRef="ngModel"
       />
       <mat-error *ngIf="passwordRef.errors?.['required']">
         Password is required
       </mat-error>
-      <mat-error *ngIf="passwordRef.errors?.['minlength']">
-        Password must be at least 6 characters long
-      </mat-error>
+
       <mat-error *ngIf="passwordRef.errors?.['pattern']">
-        Password must include uppercase, lowercase, and number
+        Password must include (8 character) uppercase, lowercase,special character and number
       </mat-error>
     </mat-form-field>
 
     <br />
 
+    
+    <!-- Forgot Password Link -->
+    <div class="forgotpassword-link">
+      <a style="cursor: pointer;" (click)="onForgotPassword()">Forgot Password?</a>
+    </div>
+
     <!-- CAPTCHA -->
-    <div style="margin: 20px 0;">
+    <div class="stylecap">
       <re-captcha
-        siteKey="6LeMhWgrAAAAAMdR0uujSayHkNRCkKSno-wo5kkK"
+        siteKey="6LdBiWkrAAAAAMFUY1Hjik1EgLzBqT-OQoVeFOMY"
         (resolved)="onCaptchaResolved($event)">
       </re-captcha>
       <mat-error *ngIf="captchaError">Please verify that you are not a robot.</mat-error>
@@ -68,11 +73,11 @@
         Login
       </button>
     </div>
-  </form>
+    </form>
 
-  <!-- Register Link -->
-  <p class="register-link">
-    Don't have an account?
-    <a (click)="onRegister()">Register New User</a>
-  </p>
+    <!-- Register Link -->
+    <p class="register-link">
+       Don't have an account?
+    <a (click)="onRegister()">Register</a>
+    </p>
 </mat-card>

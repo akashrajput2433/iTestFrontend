@@ -1,0 +1,52 @@
+.result-card {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  background-color: #fafafa;
+}
+
+.quiz-name {
+  font-size: 22px;
+  font-weight: bold;
+  color: #3f51b5;
+  margin-bottom: 10px;
+}
+
+.score-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.score-icon {
+  font-size: 48px;
+  margin-right: 16px;
+  color: #3f51b5;
+}
+
+.score-info h3 {
+  margin: 0;
+  font-size: 32px;
+  color: #4caf50;
+}
+
+.score-label {
+  margin: 0;
+  color: #777;
+  font-size: 14px;
+}
+
+.result-details {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  font-size: 16px;
+  color: #444;
+  line-height: 1.6;
+}
+
+mat-progress-bar {
+  height: 10px;
+  border-radius: 5px;
+}

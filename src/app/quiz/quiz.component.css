@@ -4,17 +4,10 @@
 
 .sidenav {
   width: 200px;
-  padding-top: 20px;
-  background-color: #ede7f6;
+
 }
 
-.logo {
-  text-align: center;
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #673ab7;
-}
+
 
 .toolbar {
   display: flex;

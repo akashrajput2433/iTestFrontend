@@ -15,7 +15,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     const allQuizzes = this.quizService.getAllQuizzes();
-
     const today = new Date();
 
     this.upcomingQuizzes = allQuizzes
@@ -23,11 +22,8 @@ export class DashboardComponent implements OnInit {
       .sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime())
       .slice(0, 3);
 
-    this.quizHistory = [
-      { name: 'History of India', marks: 18, total: 20 },
-      { name: 'Chemistry Fundamentals', marks: 15, total: 20 },
-      { name: 'English Grammar', marks: 19, total: 20 },
-    ];
+    const storedHistory = localStorage.getItem('quizHistory');
+    this.quizHistory = storedHistory ? JSON.parse(storedHistory) : [];
   }
 
   confirmAndNavigate(quizId: number): void {
@@ -38,6 +34,11 @@ export class DashboardComponent implements OnInit {
 
   logout(): void {
     localStorage.clear();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login'], { replaceUrl: true }).then(() => {
+      history.pushState(null, '', '/login');
+      window.onpopstate = () => {
+        history.go(1);
+      };
+    });
   }
 }
