@@ -46,9 +46,13 @@ export class LoginComponent {
     }
   }
 
-  // Called when "Register New User" link is clicked
   onRegister() {
     console.log('Redirecting to register...');
     this.router.navigate(['/register']);
   }
+
+  onForgotPassword() {
+  this.router.navigate(['/forgot-password']);
+}
+
 }

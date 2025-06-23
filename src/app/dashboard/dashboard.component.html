@@ -46,10 +46,6 @@
       <!-- Quiz History -->
       <h3 class="section-title">Quiz History</h3>
 
-      <div style="text-align: right; margin-bottom: 10px;">
-        <button mat-stroked-button color="warn" (click)="clearHistory()">Clear History</button>
-      </div>
-
       <div class="quiz-history" *ngIf="quizHistory.length > 0; else noHistory">
         <table mat-table [dataSource]="quizHistory" class="mat-elevation-z2 history-table">
           <ng-container matColumnDef="name">

@@ -32,13 +32,6 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  clearHistory(): void {
-    if (confirm('Are you sure you want to clear all quiz history?')) {
-      localStorage.removeItem('quizHistory');
-      this.quizHistory = [];
-    }
-  }
-
   logout(): void {
     localStorage.clear();
     this.router.navigate(['/login'], { replaceUrl: true }).then(() => {
