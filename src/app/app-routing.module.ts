@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent,canActivate: [AuthGuard]}, //canActivate: [AuthGuard]
   { path: 'quiz', component: QuizComponent}, //canActivate: [AuthGuard] 
-  { path: 'profile/edit', component: ProfileEditComponent }, //canActivate: [AuthGuard] 
+  { path: 'profile-edit', component: ProfileEditComponent }, //canActivate: [AuthGuard] 
   { path: 'take-test/:id', component: TakeTestComponent }, 
   { path: 'result', component: ResultComponent }, 
   { path: '', redirectTo: '/login', pathMatch: 'full' },
