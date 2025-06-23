@@ -12,6 +12,7 @@ import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { QuizComponent } from './quiz/quiz.component';
 
 // ✅ Angular Material Modules
+import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
@@ -58,8 +59,8 @@ import { RegisterComponent } from './register/register.component';
     MatButtonModule,
     MatCardModule,
     MatTableModule,
-    MatRadioModule
-
+    MatRadioModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
