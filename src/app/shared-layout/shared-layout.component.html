@@ -1,0 +1,32 @@
+<!-- <p>shared-layout works!</p> -->
+<mat-sidenav-container class="sidenav-container">
+  <!-- Sidebar -->
+  <mat-sidenav mode="side" opened class="sidenav" fixedInViewport>
+    <mat-toolbar color="primary">iTest</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a mat-list-item routerLink="/quiz" routerLinkActive="active">Quiz</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Main Content Area -->
+  <mat-sidenav-content>
+    <!-- Top Navbar -->
+    <mat-toolbar color="primary" class="top-toolbar">
+      <span class="header-title">{{ pageTitle }}</span>
+      <span class="spacer"></span>
+      <button mat-button [matMenuTriggerFor]="profileMenu">
+        <mat-icon>account_circle</mat-icon> Profile
+      </button>
+      <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item routerLink="/profile-edit"><mat-icon>edit</mat-icon> Edit Profile </button>
+        <button mat-menu-item routerLink="/login"><mat-icon>logout</mat-icon> Logout</button>       <!--Logout Page should be added here-->
+      </mat-menu>
+    </mat-toolbar>
+
+    <!-- The component view will appear here -->
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

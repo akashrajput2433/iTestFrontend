@@ -32,6 +32,8 @@ import { MatRadioModule } from '@angular/material/radio'
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { SharedLayoutComponent } from './shared-layout/shared-layout.component';
+
 
 
 @NgModule({
@@ -46,7 +48,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     ResultComponent,
     ForgetPasswordComponent,
     ResetPasswordComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    SharedLayoutComponent
   ],
   imports: [
     BrowserModule,
