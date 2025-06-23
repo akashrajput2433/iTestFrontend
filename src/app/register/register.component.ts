@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ApiService } from '../api.service';
 import { catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { ToastService } from '../toast.service';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private api: ApiService,
-    private router: Router
+    private router: Router,
+    private toast: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -67,18 +69,18 @@ export class RegisterComponent implements OnInit {
 
     this.api.auth.register(payload).pipe(
       tap((res) => {
-        alert(res); // plain text response like "Registered successfully."
+        this.toast.show(res as string, 'Close');
         this.registerForm.reset();
         this.router.navigate(['/login']);
       }),
       catchError((err) => {
         console.error('Register error:', err);
-        alert('Something went wrong.');
-        return of(null); // return a safe fallback observable
+        this.toast.show('Something went wrong.', 'Close');
+        return of(null); 
       })
     ).subscribe();
   } else {
-    alert('Please fill all fields correctly.');
+    this.toast.show('Please fill all fields correctly.', 'Close');
   }
 }
 }

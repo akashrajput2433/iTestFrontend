@@ -58,7 +58,15 @@ export class ApiService {
   login: (credentials: {
     email: string;
     password: string;
-  }) => this.post('Auth/login', credentials)
+  }) => this.post('Auth/login', credentials),
+
+  forgotPassword: (email: string) =>
+  this.post('Auth/forgot-password', { email }),
+
+  resetPassword: (payload: { token: string; newPassword: string }) =>
+  this.post('Auth/reset-password', payload),
+
+
   
 
 };
