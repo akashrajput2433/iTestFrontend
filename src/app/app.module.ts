@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
+import { HttpClientModule } from '@angular/common/http';
 
 // components
 import { LoginComponent } from './login/login.component';
@@ -15,6 +16,9 @@ import { QuizComponent } from './quiz/quiz.component';
 import { TakeTestComponent } from './take-test/take-test.component';
 import { ResultComponent } from './result/result.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+
 
 // ✅ Angular Material Modules
 import { MatSelectModule } from '@angular/material/select';
@@ -30,8 +34,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatRadioModule } from '@angular/material/radio'
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { NotFoundComponent } from './not-found/not-found.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 
 @NgModule({
@@ -54,6 +58,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     FormsModule,
     RecaptchaModule,
     RecaptchaFormsModule,
+    HttpClientModule,
     MatListModule,
     MatMenuModule,
     MatIconModule,
@@ -68,7 +73,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     MatCardModule,
     MatTableModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

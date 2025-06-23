@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { ApiService } from '../api.service';
+import { ToastService } from '../toast.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +17,11 @@ export class LoginComponent {
   captchaToken: string | null = null;
   captchaError: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private toastService: ToastService,
+    private api: ApiService
+) {}
 
   // Captures token when CAPTCHA is solved
   onCaptchaResolved(token: string) {
@@ -26,33 +34,40 @@ export class LoginComponent {
   onSubmit(form: NgForm) {
     if (!this.captchaToken) {
       this.captchaError = true;
+      this.toastService.show('Please complete the CAPTCHA before logging in.', 'Close');
       console.warn('CAPTCHA not completed');
       return;
     }
 
     if (form.valid) {
-      console.log('Form Submitted!');
-      console.log('Email:', this.email);
-      console.log('Password:', this.password);
-      console.log('CAPTCHA Token:', this.captchaToken);
+      const payload = {
+        email: this.email,
+        password: this.password
+      };
 
-      localStorage.setItem('authToken', 'logged-in');
-      this.router.navigate(['/dashboard']);
-      
-      // TODO: Add your real authentication logic here
-      // Optionally send captchaToken to the backend for verification
+      this.api.auth.login(payload).pipe(
+        tap((res: any) => {
+          console.log('Login success:', res);
+          localStorage.setItem('authToken', 'logged-in');
+          this.toastService.show('Login successful!', 'Close');
+          this.router.navigate(['/dashboard']);
+        }),
+        catchError((err) => {
+          console.error('Login failed:', err);
+          this.toastService.show('Login failed. Please check your credentials.', 'Close');
+          return of(null);
+        })
+      ).subscribe();
     } else {
-      console.warn('Form is invalid');
+      this.toastService.show('Please fill all required fields correctly.', 'Close');
     }
   }
 
   onRegister() {
-    console.log('Redirecting to register...');
     this.router.navigate(['/register']);
   }
 
   onForgotPassword() {
-  this.router.navigate(['/forgot-password']);
-}
-
+    this.router.navigate(['/forgot-password']);
+  }
 }

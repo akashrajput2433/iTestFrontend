@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ApiService } from '../api.service';
+import { catchError, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -9,7 +13,11 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private api: ApiService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.registerForm = this.fb.group(
@@ -47,10 +55,30 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.registerForm.valid) {
-      alert('Registered successfully!');
-      console.log(this.registerForm.value);
-      this.registerForm.reset();
-    }
+  if (this.registerForm.valid) {
+    const formValue = this.registerForm.value;
+
+    const payload = {
+      fullName: formValue.fullName,
+      email: formValue.email,
+      password: formValue.password,
+      role: 0
+    };
+
+    this.api.auth.register(payload).pipe(
+      tap((res) => {
+        alert(res); // plain text response like "Registered successfully."
+        this.registerForm.reset();
+        this.router.navigate(['/login']);
+      }),
+      catchError((err) => {
+        console.error('Register error:', err);
+        alert('Something went wrong.');
+        return of(null); // return a safe fallback observable
+      })
+    ).subscribe();
+  } else {
+    alert('Please fill all fields correctly.');
   }
+}
 }
