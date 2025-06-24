@@ -1,30 +1,37 @@
-<!-- <p>shared-layout works!</p> -->
 <mat-sidenav-container class="sidenav-container">
-  <!-- Sidebar -->
-  <mat-sidenav mode="side" opened class="sidenav" fixedInViewport>
+  <mat-sidenav
+    #sidenav
+    [mode]="isSmallScreen ? 'over' : 'side'"
+    [opened]="!isSmallScreen"
+    class="sidenav"
+  >
     <mat-toolbar color="primary">iTest</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-      <a mat-list-item routerLink="/quiz" routerLinkActive="active">Quiz</a>
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="active" (click)="isSmallScreen && sidenav.close()">Dashboard</a>
+      <a mat-list-item routerLink="/quiz" routerLinkActive="active" (click)="isSmallScreen && sidenav.close()">Quiz</a>
     </mat-nav-list>
   </mat-sidenav>
 
-  <!-- Main Content Area -->
   <mat-sidenav-content>
-    <!-- Top Navbar -->
     <mat-toolbar color="primary" class="top-toolbar">
-      <span class="header-title">{{ pageTitle }}</span>
+      <button *ngIf="isSmallScreen" mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="header-title">{{ pageTitle }}</span>   <!--This should be changeable-->
       <span class="spacer"></span>
       <button mat-button [matMenuTriggerFor]="profileMenu">
         <mat-icon>account_circle</mat-icon> Profile
       </button>
       <mat-menu #profileMenu="matMenu">
-        <button mat-menu-item routerLink="/profile-edit"><mat-icon>edit</mat-icon> Edit Profile </button>
-        <button mat-menu-item routerLink="/login"><mat-icon>logout</mat-icon> Logout</button>       <!--Logout Page should be added here-->
+        <button mat-menu-item routerLink="/profile-edit">
+          <mat-icon>edit</mat-icon> Edit Profile
+        </button>
+        <button mat-menu-item routerLink="/login">
+          <mat-icon>logout</mat-icon> Logout
+        </button>
       </mat-menu>
     </mat-toolbar>
 
-    <!-- The component view will appear here -->
     <div class="main-content">
       <router-outlet></router-outlet>
     </div>

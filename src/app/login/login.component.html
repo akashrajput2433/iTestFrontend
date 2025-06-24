@@ -33,7 +33,7 @@
         [(ngModel)]="password"
         required
         minlength="8"
-        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.@$!%*?#])[A-Za-z\d.@$!%*?#]{8,}$"
         #passwordRef="ngModel"
       />
       <mat-error *ngIf="passwordRef.errors?.['required']">

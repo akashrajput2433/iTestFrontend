@@ -15,6 +15,14 @@ import { QuizComponent } from './quiz/quiz.component';
 import { TakeTestComponent } from './take-test/take-test.component';
 import { ResultComponent } from './result/result.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LayoutModule } from '@angular/cdk/layout';
+// import { MatSidenavModule } from '@angular/material/sidenav';
+// import { MatToolbarModule } from '@angular/material/toolbar';
+// import { MatIconModule } from '@angular/material/icon';
+// import { MatListModule } from '@angular/material/list';
+// import { MatMenuModule } from '@angular/material/menu';
+// import { MatButtonModule } from '@angular/material/button';
 
 // ✅ Angular Material Modules
 import { MatSelectModule } from '@angular/material/select';
@@ -53,6 +61,7 @@ import { SharedLayoutComponent } from './shared-layout/shared-layout.component';
   ],
   imports: [
     BrowserModule,
+    LayoutModule,
     AppRoutingModule,
     FormsModule,
     RecaptchaModule,
