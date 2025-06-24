@@ -1,32 +1,38 @@
 <mat-sidenav-container class="test-layout">
   <!-- Sidebar -->
-  <mat-sidenav mode="side" opened class="sidenav">
+  <!-- <mat-sidenav mode="side" opened class="sidenav">
     <mat-toolbar color="primary">ITest</mat-toolbar>
-  </mat-sidenav>
+  </mat-sidenav> -->
 
   <!-- Main content -->
   <mat-sidenav-content>
     <!-- Fixed Top Navbar -->
-    <mat-toolbar color="primary" class="topbar">
+    <!-- <mat-toolbar color="primary" class="topbar">
       <span>{{ quizTitle }}</span>
-    </mat-toolbar>
+    </mat-toolbar> -->
 
     <!-- Main Scrollable Content -->
     <div class="content-wrapper">
-      <div class="test-container" *ngIf="questions.length">
-        <mat-card class="quiz-header">
-          <div class="quiz-header-row">
-            <div>
-              <h2>{{ quizTitle }}</h2>
-              <p class="description">{{ description }}</p>
-              <p>Answer the following questions:</p>
-            </div>
-            <div class="score-info">
-              <p><strong>Total Marks:</strong> {{ totalMarks }}</p>
-              <p><strong>Score to Pass:</strong> {{ scoreToPass }}</p>
-            </div>
-          </div>
-        </mat-card>
+      <div class="test-container " *ngIf="questions.length">
+      <mat-card class="quiz-header shadow-sm mb-5" style="padding: 24px; border-radius: 16px;">
+  <div class="row align-items-center">
+
+    <!-- Left: Title & Description -->
+    <div class="col-md-8 col-sm-12 mb-4">
+      <h2 class="quiz-title mb-2">{{ quizTitle }}</h2>
+      <p class="quiz-description mb-3">{{ description }}</p>
+    </div>
+    
+    <!-- Right: Marks Info -->
+    <div class="col-md-4 col-sm-12 text-md-right text-sm-left mt-sm-3 mt-md-0 score-panel p-3" style=" border-radius: 12px;">
+      <p style="margin: 0; font-size: 15px;"><strong>Total Marks:</strong> {{ totalMarks }}</p>
+      <p style="margin: 0; font-size: 15px;"><strong>Score to Pass:</strong> {{ scoreToPass }}</p>
+    </div>
+    
+  </div>
+  <p class="instructions text-muted ">Answer the following questions:</p>
+</mat-card>
+
 
         <form (ngSubmit)="submitQuiz()">
           <div *ngFor="let question of questions; let i = index">
