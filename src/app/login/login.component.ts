@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ApiService } from '../api.service';
-import { ToastService } from '../toast.service';
+import { UserService } from '../userservice.service';
 
 @Component({
   selector: 'app-login',
@@ -19,22 +19,19 @@ export class LoginComponent {
 
   constructor(
     private router: Router,
-    private toastService: ToastService,
-    private api: ApiService
-) {}
+    private api: ApiService,
+    private userService: UserService
+  ) {}
 
-  // Captures token when CAPTCHA is solved
   onCaptchaResolved(token: string) {
     this.captchaToken = token;
     this.captchaError = false;
     console.log('CAPTCHA Token:', token);
   }
 
-  // Called when login form is submitted
   onSubmit(form: NgForm) {
     if (!this.captchaToken) {
       this.captchaError = true;
-      this.toastService.show('Please complete the CAPTCHA before logging in.', 'Close');
       console.warn('CAPTCHA not completed');
       return;
     }
@@ -47,19 +44,26 @@ export class LoginComponent {
 
       this.api.auth.login(payload).pipe(
         tap((res: any) => {
-          console.log('Login success:', res);
-          localStorage.setItem('authToken', 'logged-in');
-          this.toastService.show('Login successful!', 'Close');
-          this.router.navigate(['/dashboard']);
+          if (res?.success && res?.data) {
+            const user = res.data;
+            this.userService.setUserInfo({
+              id: user.id,
+              email: user.email,
+              fullName: user.fullName
+            });
+            this.router.navigate(['/dashboard']);
+          } else {
+            alert(res?.message || 'Login failed');
+          }
         }),
         catchError((err) => {
           console.error('Login failed:', err);
-          this.toastService.show('Login failed. Please check your credentials.', 'Close');
+          alert('An error occurred during login');
           return of(null);
         })
       ).subscribe();
     } else {
-      this.toastService.show('Please fill all required fields correctly.', 'Close');
+      alert('Please fill all required fields correctly.');
     }
   }
 

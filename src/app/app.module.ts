@@ -43,8 +43,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    QuizComponent,
     ProfileEditComponent,
+    QuizComponent,
     TakeTestComponent,
     RegisterComponent,
     ResultComponent,
@@ -52,6 +52,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     ResetPasswordComponent,
     NotFoundComponent
   ],
+
   imports: [
     BrowserModule,
     AppRoutingModule,

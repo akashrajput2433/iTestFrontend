@@ -68,8 +68,9 @@ export class RegisterComponent implements OnInit {
     };
 
     this.api.auth.register(payload).pipe(
-      tap((res) => {
-        this.toast.show(res as string, 'Close');
+      tap((res: any) => {
+        const message = typeof res === 'string' ? res : res?.message || 'Registration successful';
+        this.toast.show(message, 'Close');
         this.registerForm.reset();
         this.router.navigate(['/login']);
       }),

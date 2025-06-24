@@ -8,37 +8,50 @@
   <mat-sidenav-content>
     <!-- Fixed Top Navbar -->
     <mat-toolbar color="primary" class="topbar">
+      <span>{{ quizTitle }}</span>
     </mat-toolbar>
 
     <!-- Main Scrollable Content -->
     <div class="content-wrapper">
       <div class="test-container" *ngIf="questions.length">
         <mat-card class="quiz-header">
-          <h2>{{ quizTitle }}</h2>
-          <p>Answer the following questions:</p>
+          <div class="quiz-header-row">
+            <div>
+              <h2>{{ quizTitle }}</h2>
+              <p class="description">{{ description }}</p>
+              <p>Answer the following questions:</p>
+            </div>
+            <div class="score-info">
+              <p><strong>Total Marks:</strong> {{ totalMarks }}</p>
+              <p><strong>Score to Pass:</strong> {{ scoreToPass }}</p>
+            </div>
+          </div>
         </mat-card>
 
         <form (ngSubmit)="submitQuiz()">
           <div *ngFor="let question of questions; let i = index">
             <mat-card class="question-card">
               <h3>Q{{ i + 1 }}: {{ question.questionText }}</h3>
+
               <mat-radio-group
                 [name]="'question_' + question.id"
                 (change)="selectAnswer(question.id, $event.value)"
               >
                 <mat-radio-button
                   *ngFor="let option of question.options"
-                  [value]="option"
+                  [value]="option.value"
                   class="option-button"
                 >
-                  {{ option }}
+                  {{ option.label }}. {{ option.value }}
                 </mat-radio-button>
               </mat-radio-group>
             </mat-card>
           </div>
 
           <div class="submit-button">
-            <button mat-raised-button color="primary" type="submit">Submit</button>
+            <button mat-raised-button color="primary" type="submit">
+              Submit
+            </button>
           </div>
         </form>
       </div>

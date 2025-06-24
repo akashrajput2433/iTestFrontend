@@ -30,23 +30,34 @@
     <div class="main-content">
       <h2 class="section-title">Available Quizzes</h2>
 
-      <div class="quiz-grid">
-        <mat-card *ngFor="let quiz of allQuizzes" class="quiz-card mat-elevation-z3">
-          <mat-card-header>
-            <mat-card-title>{{ quiz.name }}</mat-card-title>
-          </mat-card-header>
+     <ng-container *ngIf="quizzes$ | async as allQuizzes; else loading">
+  <div class="quiz-grid" *ngIf="allQuizzes.length > 0; else noQuizzes">
+    <mat-card *ngFor="let quiz of allQuizzes" class="quiz-card mat-elevation-z3">
+      <mat-card-header>
+        <mat-card-title>{{ quiz.title }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p><strong>Due Date:</strong> {{ quiz.scheduledAt | date: 'longDate' }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="confirmAndNavigate(quiz.id)">
+          Take Test
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</ng-container>
 
-          <mat-card-content>
-            <p><strong>Due Date:</strong> {{ quiz.dueDate | date: 'longDate' }}</p>
-          </mat-card-content>
+<!-- No quizzes fallback -->
+<ng-template #noQuizzes>
+  <p class="no-quizzes">No quizzes available right now.</p>
+</ng-template>
 
-          <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="confirmAndNavigate(quiz.id)">
-              Take Test
-            </button>
-          </mat-card-actions>
-        </mat-card>
-      </div>
+<!-- Loading fallback -->
+<ng-template #loading>
+  <p class="loading-text">Loading quizzes...</p>
+</ng-template>
+
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

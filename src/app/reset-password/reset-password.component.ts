@@ -22,25 +22,28 @@ export class ResetPasswordComponent {
   ) {}
 
   onReset(form: any): void {
-    if (form.valid && this.password === this.confirmPassword) {
-      const payload = {
-        token: this.token,
-        newPassword: this.password
-      };
+  if (form.valid && this.password === this.confirmPassword) {
+    const payload = {
+      token: this.token,
+      newPassword: this.password
+    };
 
-      this.api.auth.resetPassword(payload).pipe(
-        tap(() => {
-          this.toast.show('Password reset successful!', 'Close');
-          this.router.navigate(['/login']);
-        }),
-        catchError(err => {
-          console.error('Password reset failed:', err);
-          this.toast.show('Invalid or expired token. Please try again.', 'Close');
-          return of(null);
-        })
-      ).subscribe();
-    } else {
-      this.toast.show('Please fix the errors before submitting.', 'Close');
-    }
+    this.api.auth.resetPassword(payload).pipe(
+      tap((res: any) => {
+        const message = typeof res === 'string' ? res : res?.message || 'Password reset successful!';
+        this.toast.show(message, 'Close');
+        this.router.navigate(['/login']);
+      }),
+      catchError(err => {
+        console.error('Password reset failed:', err);
+        const errorMessage = err?.error?.message || 'Invalid or expired token. Please try again.';
+        this.toast.show(errorMessage, 'Close');
+        return of(null);
+      })
+    ).subscribe();
+  } else {
+    this.toast.show('Please fix the errors before submitting.', 'Close');
   }
+}
+
 }

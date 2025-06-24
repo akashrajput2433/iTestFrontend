@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { QuizService } from '../services/quiz.service';
+import { ApiService } from '../api.service';
+import { ToastService } from '../toast.service';
+import { catchError, tap, map } from 'rxjs/operators';
+import { of } from 'rxjs';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -11,19 +15,40 @@ export class DashboardComponent implements OnInit {
   upcomingQuizzes: any[] = [];
   quizHistory: any[] = [];
 
-  constructor(private router: Router, private quizService: QuizService) {}
+  constructor(
+    private router: Router,
+    private api: ApiService,
+    private toast: ToastService,
+ 
+  ) {}
 
   ngOnInit(): void {
-    const allQuizzes = this.quizService.getAllQuizzes();
-    const today = new Date();
 
-    this.upcomingQuizzes = allQuizzes
-      .filter(quiz => new Date(quiz.dueDate) >= today)
-      .sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime())
-      .slice(0, 3);
+    this.api.quiz.getAll().pipe(
+      map((res: any[]) => {
+        const today = new Date();
+        return res
+          .filter(q => new Date(q.dueDate) >= today)
+          .sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime())
+          .slice(0, 3);
+      }),
+      tap((quizzes) => {
+        this.upcomingQuizzes = quizzes;
+        this.toast.show('Upcoming quizzes loaded successfully.', 'Close');
+      }),
+      catchError(err => {
+        const message = err?.error?.message || 'Failed to load quizzes.';
+        this.toast.show(message, 'Close');
+        return of([]);
+      })
+    ).subscribe();
 
-    const storedHistory = localStorage.getItem('quizHistory');
-    this.quizHistory = storedHistory ? JSON.parse(storedHistory) : [];
+    // You can also fetch this history from an API if needed
+    this.quizHistory = [
+      { name: 'History of India', marks: 18, total: 20 },
+      { name: 'Chemistry Fundamentals', marks: 15, total: 20 },
+      { name: 'English Grammar', marks: 19, total: 20 }
+    ];
   }
 
   confirmAndNavigate(quizId: number): void {
@@ -34,11 +59,6 @@ export class DashboardComponent implements OnInit {
 
   logout(): void {
     localStorage.clear();
-    this.router.navigate(['/login'], { replaceUrl: true }).then(() => {
-      history.pushState(null, '', '/login');
-      window.onpopstate = () => {
-        history.go(1);
-      };
-    });
+    this.router.navigate(['/login']);
   }
 }

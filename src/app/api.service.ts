@@ -65,11 +65,33 @@ export class ApiService {
 
   resetPassword: (payload: { token: string; newPassword: string }) =>
   this.post('Auth/reset-password', payload),
+  };
 
-
-  
-
+  quiz = {
+  getAll: (): Observable<any> => this.get('Quiz')
 };
+
+user = {
+    updateProfile: (userId: number, profileData: any): Observable<any> => 
+      this.put(`User/${userId}/profile`, profileData),
+    
+    getUserStats: (userId: number): Observable<any> => 
+      this.get(`User/${userId}/stats`),
+    
+    getUserResults: (userId: number): Observable<any> => 
+      this.get(`User/${userId}/results`),
+    
+    getQuizById: (id: number): Observable<any> => 
+      this.get(`User/quiz/${id}`),
+    
+    getAvailableQuizzes: (id:number): Observable<any> => 
+      this.get(`User/${id}/available-quizzes`),
+    
+    submitQuiz: (quizId: number, submission: any): Observable<any> => 
+      this.post(`User/${quizId}/submit`, submission)
+  };
+
+
 
 
 
